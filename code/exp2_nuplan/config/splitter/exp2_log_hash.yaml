@@ -1,0 +1,8 @@
+# Train/val split of the train_pittsburgh training pool by LOG (never by frame), see exp2_nuplan/training/splitter.py.
+# Validation logs are a hashed 5 % of the train_pittsburgh logs: nuPlan's val/test logs are never used for training.
+_target_: exp2_nuplan.training.splitter.LogHashSplitter
+_convert_: 'all'
+
+val_fraction: 0.05
+salt: exp2-train-pittsburgh
+allowlist: null   # optional text file of scenario tokens (one per line); other cached scenarios are ignored

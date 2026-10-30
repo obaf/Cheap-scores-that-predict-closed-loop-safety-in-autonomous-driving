@@ -1,0 +1,1 @@
+{"model": "vector", "seed": 2, "process_wall_seconds": 1032, "returncode": 0, "torch_threads": 2, "loader_workers": 6, "cpus": "172-179"}

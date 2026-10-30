@@ -1,0 +1,44 @@
+15:46:22 train_baselines: SMOKE=0 MODE=parallel NPROC=192 OUT=/data/exp2/baselines
+15:46:22 data: /data/nuplan/dataset/nuplan-v1.1/splits/train_pittsburgh  N_SAMPLES=50000 MIN_GAP_S=2.0 DATA_SEED=0
+15:46:22 training: MODELS='mlp vector raster' SEEDS='0 1 2' EPOCHS=10 BATCH=64 LR=1e-3 (x0.1 at epochs 7,9) EARLY_FRACTION=0.15
+15:46:22 threads (torch+workers): mlp 1+3 vector 2+6 raster 50+2; cache workers 64; pinning 1
+15:46:22 === phase preflight
+15:46:28 === phase preflight done in 6 s
+15:46:28 === phase prewarm
+15:46:28 === phase prewarm done in 0 s
+15:46:28 === phase cache
+15:46:28 cache mlp: start (64 worker processes) -> /data/exp2/baselines/logs/cache_mlp.log
+15:46:28 cache vector: start (64 worker processes) -> /data/exp2/baselines/logs/cache_vector.log
+15:46:28 cache raster: start (64 worker processes) -> /data/exp2/baselines/logs/cache_raster.log
+15:47:08 cache raster: ok in 40 s
+15:47:18 cache mlp: ok in 50 s
+15:47:28 cache vector: ok in 60 s
+15:47:28 === phase cache done in 60 s
+15:47:28 === phase split
+mlp: 50000 usable samples in /data/exp2/baselines/cache/mlp
+vector: 50000 usable samples in /data/exp2/baselines/cache/vector
+raster: 50000 usable samples in /data/exp2/baselines/cache/raster
+{"caches": {"mlp": 50000, "vector": 50000, "raster": 50000}, "common_samples": 50000, "train_samples": 48020, "val_samples": 1980, "train_logs": 693, "val_logs": 40, "val_fraction_of_logs": 0.05, "salt": "exp2-train-pittsburgh", "checked_against_forbidden_dirs": ["/data/nuplan/dataset/nuplan-v1.1/splits/val", "/data/nuplan/dataset/nuplan-v1.1/splits/test"], "forbidden_logs_found": 0, "allowlist": "/data/exp2/baselines/train_tokens.txt"}
+15:47:29 === phase split done in 1 s
+15:47:29 === phase train
+15:47:29 train raster seed0: start (torch threads 50, loader workers 2, cpus 0-51) -> /data/exp2/baselines/logs/train_raster_seed0.log
+15:47:29 train raster seed1: start (torch threads 50, loader workers 2, cpus 52-103) -> /data/exp2/baselines/logs/train_raster_seed1.log
+15:47:29 train raster seed2: start (torch threads 50, loader workers 2, cpus 104-155) -> /data/exp2/baselines/logs/train_raster_seed2.log
+15:47:29 train vector seed0: start (torch threads 2, loader workers 6, cpus 156-163) -> /data/exp2/baselines/logs/train_vector_seed0.log
+15:47:29 train vector seed1: start (torch threads 2, loader workers 6, cpus 164-171) -> /data/exp2/baselines/logs/train_vector_seed1.log
+15:47:29 train vector seed2: start (torch threads 2, loader workers 6, cpus 172-179) -> /data/exp2/baselines/logs/train_vector_seed2.log
+15:47:29 train mlp seed2: start (torch threads 1, loader workers 3, cpus 188-191) -> /data/exp2/baselines/logs/train_mlp_seed2.log
+15:47:29 train mlp seed0: start (torch threads 1, loader workers 3, cpus 180-183) -> /data/exp2/baselines/logs/train_mlp_seed0.log
+15:47:29 train mlp seed1: start (torch threads 1, loader workers 3, cpus 184-187) -> /data/exp2/baselines/logs/train_mlp_seed1.log
+15:49:11 train mlp seed1: ok in 102 s
+15:49:12 train mlp seed2: ok in 103 s
+15:49:12 train mlp seed0: ok in 103 s
+16:04:41 train vector seed2: ok in 1032 s
+16:04:45 train vector seed0: ok in 1036 s
+16:04:58 train vector seed1: ok in 1049 s
+16:08:50 train raster seed2: FAILED (rc=1), see /data/exp2/baselines/logs/train_raster_seed2.log
+16:08:50 train raster seed1: FAILED (rc=15), see /data/exp2/baselines/logs/train_raster_seed1.log
+16:08:52 train raster seed0: FAILED (rc=1), see /data/exp2/baselines/logs/train_raster_seed0.log
+16:08:52 === phase train done in 1283 s
+code/train_baselines.sh: line 298: syntax error near unexpected token `else'
+code/train_baselines.sh: line 298: `    else'

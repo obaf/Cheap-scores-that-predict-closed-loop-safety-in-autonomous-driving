@@ -1,0 +1,93 @@
+[
+ {
+  "id": "nuplan_maps",
+  "method": "s3-nosign",
+  "region": "ap-northeast-1",
+  "url": "s3://motional-nuplan/public/nuplan-v1.1/nuplan-maps-v1.1.zip",
+  "bytes": 970997691,
+  "archive": "zip",
+  "strip": "nuplan-maps-v1.0",
+  "extract_to": "nuplan/dataset/maps"
+ },
+ {
+  "id": "ckpt_tuplan_pdm_open",
+  "method": "curl",
+  "url": "https://drive.usercontent.google.com/download?id=1ADnMIJ-QiEtPuleFVA7USwpBbpGkmwz3&export=download&confirm=t",
+  "filename": "pdm_open_checkpoint.ckpt",
+  "bytes": 15550856,
+  "archive": "none",
+  "extract_to": "checkpoints/tuplan_garage"
+ },
+ {
+  "id": "ckpt_tuplan_pdm_offset",
+  "method": "curl",
+  "url": "https://drive.usercontent.google.com/download?id=1lt8_951VY-2AJBHddgl11KDXJvQVHjvP&export=download&confirm=t",
+  "filename": "pdm_offset_checkpoint.ckpt",
+  "bytes": 19000210,
+  "archive": "none",
+  "extract_to": "checkpoints/tuplan_garage"
+ },
+ {
+  "id": "ckpt_tuplan_gc_pgp",
+  "method": "curl",
+  "url": "https://drive.usercontent.google.com/download?id=1FtV7fOSEuPo3IGvFLSL8UCKA3BXGvDkK&export=download&confirm=t",
+  "filename": "gc_pgp_checkpoint.ckpt",
+  "bytes": 4916655,
+  "archive": "none",
+  "extract_to": "checkpoints/tuplan_garage"
+ },
+ {
+  "id": "ckpt_tuplan_plancnn",
+  "method": "curl",
+  "url": "https://drive.usercontent.google.com/download?id=14s4U95LJZL66CThYQ3KRQBHqcj4jTNz1&export=download&confirm=t",
+  "filename": "plancnn_checkpoint.ckpt",
+  "bytes": 286746619,
+  "archive": "none",
+  "extract_to": "checkpoints/tuplan_garage"
+ },
+ {
+  "id": "ckpt_tuplan_urbandriver",
+  "method": "curl",
+  "url": "https://drive.usercontent.google.com/download?id=1qde8EmDjTBfFAcl_J_bIOgRWp-q6gTzL&export=download&confirm=t",
+  "filename": "urbandriver_checkpoint.ckpt",
+  "bytes": 34843549,
+  "archive": "none",
+  "extract_to": "checkpoints/tuplan_garage"
+ },
+ {
+  "id": "ckpt_diffusion_planner_model",
+  "method": "https",
+  "url": "https://huggingface.co/ZhengYinan2001/Diffusion-Planner/resolve/main/model.pth",
+  "filename": "model.pth",
+  "bytes": 48549085,
+  "archive": "none",
+  "extract_to": "checkpoints/diffusion_planner"
+ },
+ {
+  "id": "ckpt_diffusion_planner_args",
+  "method": "https",
+  "url": "https://huggingface.co/ZhengYinan2001/Diffusion-Planner/resolve/main/args.json",
+  "filename": "args.json",
+  "bytes": 7404,
+  "archive": "none",
+  "extract_to": "checkpoints/diffusion_planner"
+ },
+ {
+  "id": "ckpt_pluto",
+  "method": "curl",
+  "url": "https://huggingface.co/rxinhkust/PlanScope_model_zoo/resolve/main/pluto_1M_aux_cil_m12_ori.ckpt",
+  "filename": "pluto_1M_aux_cil.ckpt",
+  "bytes": 51431136,
+  "archive": "none",
+  "extract_to": "checkpoints/pluto"
+ },
+ {
+  "id": "ckpt_plantf",
+  "method": "curl",
+  "url": "https://raw.githubusercontent.com/richie-live/SAH-Drive/master/SAH_Diffusion_Model/planTF.ckpt",
+  "filename": "planTF.ckpt",
+  "bytes": 8184077,
+  "archive": "none",
+  "extract_to": "checkpoints/plantf"
+ }
+]

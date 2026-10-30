@@ -1,0 +1,1 @@
+{"model": "raster", "seed": 1, "process_wall_seconds": 13960, "returncode": 0, "torch_threads": 50, "loader_workers": 2, "cpus": "52-103"}

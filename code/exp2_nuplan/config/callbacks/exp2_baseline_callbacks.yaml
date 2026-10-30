@@ -1,0 +1,24 @@
+# Training callbacks for the experiment-2 baselines (replaces nuPlan's default_callbacks, whose
+# ModelCheckpointAtEpochEnd/VisualizationCallback use hooks removed in pytorch-lightning 2.x).
+learning_rate_monitor_callback:
+  _target_: pytorch_lightning.callbacks.LearningRateMonitor
+  _convert_: 'all'
+  logging_interval: 'epoch'
+
+exp2_checkpoint_callback:
+  _target_: exp2_nuplan.training.checkpointing.BaselineCheckpointCallback
+  _convert_: 'all'
+  dirpath: ${output_dir}/checkpoints   # train_baselines.sh sets /data/exp2/baselines/<model>/seed<k>
+  early_fraction: 0.15                 # EARLY checkpoint after this fraction of the optimizer steps
+  run_name: ${job_name}
+  info:                                # copied into train_manifest.json
+    seed: ${seed}
+    model_target: ${model._target_}
+    job_name: ${job_name}
+    batch_size_cfg: ${data_loader.params.batch_size}
+    num_workers: ${data_loader.params.num_workers}
+    optimizer: ${optimizer._target_}
+    lr: ${optimizer.lr}
+    weight_decay: ${optimizer.weight_decay}
+    cache_path: ${cache.cache_path}
+    output_dir: ${output_dir}

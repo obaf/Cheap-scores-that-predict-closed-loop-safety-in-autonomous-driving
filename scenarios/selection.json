@@ -1,0 +1,34 @@
+{
+ "seed": 20261028,
+ "val14_tokens_in_yaml": 1118,
+ "val14_resolved": 1118,
+ "per_type_available": {
+  "behind_long_vehicle": 14,
+  "changing_lane": 70,
+  "following_lane_with_lead": 15,
+  "high_lateral_acceleration": 96,
+  "high_magnitude_speed": 99,
+  "low_magnitude_speed": 100,
+  "near_multiple_vehicles": 85,
+  "starting_left_turn": 100,
+  "starting_right_turn": 98,
+  "starting_straight_traffic_light_intersection_traversal": 98,
+  "stationary_in_traffic": 98,
+  "stopping_with_lead": 93,
+  "traversing_pickup_dropoff": 99,
+  "waiting_for_pedestrian_to_cross": 53
+ },
+ "topped_up_types": [
+  "following_lane_with_lead",
+  "behind_long_vehicle"
+ ],
+ "topup_candidates": 61,
+ "val700": 688,
+ "val700_by_source": {
+  "val14": 629,
+  "val_topup": 59
+ },
+ "seed140": 140,
+ "n_logs_val700": 256,
+ "duplicate_tokens_val700": 0
+}

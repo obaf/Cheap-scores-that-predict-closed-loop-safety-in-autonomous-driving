@@ -1,0 +1,10 @@
+# Analysis and figures (any machine): python >= 3.10
+numpy>=1.26
+scipy>=1.11
+pandas>=2.0
+scikit-learn>=1.4
+matplotlib>=3.8
+pyarrow>=14
+pyyaml>=6.0
+# Simulation host (Linux): see env/ for the two conda environments (nuplan, navsim) with exact pinned versions:
+#   env/build_env_nuplan.sh, env/build_env_navsim.sh, env/nuplan.yml, env/navsim.yml, env/*-pip-freeze.txt

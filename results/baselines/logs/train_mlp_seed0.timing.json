@@ -1,0 +1,1 @@
+{"model": "mlp", "seed": 0, "process_wall_seconds": 103, "returncode": 0, "torch_threads": 1, "loader_workers": 3, "cpus": "180-183"}

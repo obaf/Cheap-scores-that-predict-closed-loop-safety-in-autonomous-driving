@@ -1,0 +1,19 @@
+# @package _global_
+# Experiment config for the ego-status MLP, modelled on nuPlan's training_raster_model.yaml
+# (same objective and metrics, no data augmentation: the ego-status baselines of AD-MLP and NAVSIM use none).
+job_name: ego_mlp_model
+py_func: train
+objective_aggregate_mode: mean
+
+defaults:
+  - override /data_augmentation:
+  - override /objective:
+      - imitation_objective
+  - override /splitter: nuplan
+  - override /model: ego_mlp_model
+  - override /scenario_filter: training_scenarios
+  - override /training_metric:
+      - avg_displacement_error
+      - avg_heading_error
+      - final_displacement_error
+      - final_heading_error

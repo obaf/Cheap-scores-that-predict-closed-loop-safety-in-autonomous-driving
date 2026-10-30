@@ -1,0 +1,24 @@
+# Ego-status MLP (experiment 2 "small baselines"): ego past poses only -> 16 poses at 0.5 s (8 s).
+# Training:   +training=training_ego_mlp_model   (hydra.searchpath must include pkg://exp2_nuplan.config)
+# Simulation: planner=ml_planner model=ego_mlp_model 'planner.ml_planner.model_config=${model}'
+#             planner.ml_planner.checkpoint_path=<ckpt>
+_target_: exp2_nuplan.models.ego_mlp.EgoStatusMLP
+_convert_: 'all'
+
+hidden_size: 512
+num_hidden_layers: 3
+
+# Ego history: the ego part of nuPlan's AgentsFeatureBuilder, same sampling as simple_vector_model
+# (present pose + 4 past poses spread over 1.5 s).
+past_trajectory_sampling:
+  _target_: nuplan.planning.simulation.trajectory.trajectory_sampling.TrajectorySampling
+  _convert_: 'all'
+  num_poses: 4
+  time_horizon: 1.5
+
+# Predicted trajectory: 16 poses at 0.5 s (8 s), as nuPlan's raster_model and simple_vector_model.
+future_trajectory_sampling:
+  _target_: nuplan.planning.simulation.trajectory.trajectory_sampling.TrajectorySampling
+  _convert_: 'all'
+  num_poses: 16
+  interval_length: 0.5

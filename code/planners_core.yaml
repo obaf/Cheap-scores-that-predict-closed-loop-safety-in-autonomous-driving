@@ -1,0 +1,57 @@
+# Experiment 2 planner registry, part 1: rule-based planners and anchors (nuPlan built-ins, tuplan_garage, interPlan).
+# Fields: family; kind (rule | released | ours); overrides (Hydra overrides added to run_simulation); optional
+# searchpath / pythonpath; speed (relative cost per scenario, scheduling only). See runner.build_command().
+planners:
+  idm_default:
+    family: IDM
+    kind: rule
+    overrides: [planner=idm_planner]
+  idm_cautious:
+    family: IDM
+    kind: rule
+    overrides: [planner=idm_planner, planner.idm_planner.target_velocity=8.0, planner.idm_planner.min_gap_to_lead_agent=3.0,
+                planner.idm_planner.headway_time=2.5, planner.idm_planner.accel_max=0.8, planner.idm_planner.decel_max=2.0]
+  idm_fast:
+    family: IDM
+    kind: rule
+    overrides: [planner=idm_planner, planner.idm_planner.target_velocity=15.0, planner.idm_planner.headway_time=1.0,
+                planner.idm_planner.accel_max=1.5]
+  idm_aggressive:
+    family: IDM
+    kind: rule
+    overrides: [planner=idm_planner, planner.idm_planner.target_velocity=12.0, planner.idm_planner.min_gap_to_lead_agent=0.5,
+                planner.idm_planner.headway_time=0.6, planner.idm_planner.accel_max=2.5, planner.idm_planner.decel_max=4.5]
+  idm_mobil:
+    family: IDM
+    kind: rule
+    overrides: [planner=idm_planner,
+                planner.idm_planner._target_=interplan.planning.simulation.planner.idm_mobil_planner.IDMMobilPlanner,
+                +planner.idm_planner.politeness_factor=0.5, +planner.idm_planner.changing_threshold=0.2,
+                +planner.idm_planner.push_lane_change=true]
+  pdm_closed:
+    family: PDM
+    kind: rule
+    speed: 2.0
+    overrides: [planner=pdm_closed_planner]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  pdm_closed_nooffset:
+    family: PDM
+    kind: rule
+    speed: 1.5
+    overrides: [planner=pdm_closed_planner, planner.pdm_closed_planner.lateral_offsets=null]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  pdm_closed_2s:
+    family: PDM
+    kind: rule
+    speed: 2.0
+    overrides: [planner=pdm_closed_planner, planner.pdm_closed_planner.proposal_sampling.num_poses=20]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  const_velocity:
+    family: Anchor
+    kind: rule
+    overrides: [planner=simple_planner, planner.simple_planner.max_velocity=40.0, planner.simple_planner.horizon_seconds=8.0,
+                planner.simple_planner.sampling_time=0.1]
+  log_replay:
+    family: Anchor
+    kind: rule
+    overrides: [planner=log_future_planner]

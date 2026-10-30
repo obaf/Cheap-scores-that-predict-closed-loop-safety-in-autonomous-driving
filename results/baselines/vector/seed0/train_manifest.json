@@ -1,0 +1,132 @@
+{
+ "run_name": "vector_seed0",
+ "seed": 0,
+ "model_target": "nuplan.planning.training.modeling.models.simple_vector_map_model.VectorMapSimpleMLP",
+ "job_name": "vector_seed0",
+ "batch_size_cfg": 64,
+ "num_workers": 6,
+ "optimizer": "torch.optim.Adam",
+ "lr": 0.001,
+ "weight_decay": 0.0005,
+ "cache_path": "/data/exp2/baselines/cache/vector",
+ "output_dir": "/data/exp2/baselines/logs/train_vector_seed0",
+ "train_samples": 48020,
+ "val_samples": 1980,
+ "batch_size": 64,
+ "batches_per_epoch": 750,
+ "max_epochs": 10,
+ "total_steps": 7500,
+ "early_fraction": 0.15,
+ "early_step": 1125,
+ "early": {
+  "checkpoint": "/data/exp2/baselines/vector/seed0/early.ckpt",
+  "global_step": 1125,
+  "epoch": 1,
+  "epochs_completed": 1.5,
+  "samples_seen": 72000,
+  "train_loss_last100": 23.982197570800782,
+  "train_seconds": 153.2,
+  "val_loss": 22.696743138631184
+ },
+ "final": {
+  "checkpoint": "/data/exp2/baselines/vector/seed0/final.ckpt",
+  "global_step": 7500,
+  "epochs_completed": 10,
+  "samples_seen": 480000,
+  "train_loss_last_epoch": 14.598903705596923,
+  "train_loss_last100": 14.326381807327271,
+  "train_seconds": 1022.2,
+  "val_loss": 15.478450043996174
+ },
+ "history": [
+  {
+   "epoch": 0,
+   "global_step": 750,
+   "lr": 0.001,
+   "train_loss": 41.1781257909139,
+   "val_loss": 25.213459014892578,
+   "epoch_seconds": 102.8
+  },
+  {
+   "epoch": 1,
+   "global_step": 1500,
+   "lr": 0.001,
+   "train_loss": 24.512624031066895,
+   "val_loss": 21.923887252807617,
+   "epoch_seconds": 105.1
+  },
+  {
+   "epoch": 2,
+   "global_step": 2250,
+   "lr": 0.001,
+   "train_loss": 22.21915028254191,
+   "val_loss": 19.750694274902344,
+   "epoch_seconds": 102.9
+  },
+  {
+   "epoch": 3,
+   "global_step": 3000,
+   "lr": 0.001,
+   "train_loss": 20.071674793243407,
+   "val_loss": 18.970624923706055,
+   "epoch_seconds": 101.8
+  },
+  {
+   "epoch": 4,
+   "global_step": 3750,
+   "lr": 0.001,
+   "train_loss": 18.877508640289307,
+   "val_loss": 17.813934326171875,
+   "epoch_seconds": 102.5
+  },
+  {
+   "epoch": 5,
+   "global_step": 4500,
+   "lr": 0.001,
+   "train_loss": 17.963206803003946,
+   "val_loss": 17.67287254333496,
+   "epoch_seconds": 102.2
+  },
+  {
+   "epoch": 6,
+   "global_step": 5250,
+   "lr": 0.001,
+   "train_loss": 17.336233875274658,
+   "val_loss": 17.684520721435547,
+   "epoch_seconds": 102.8
+  },
+  {
+   "epoch": 7,
+   "global_step": 6000,
+   "lr": 0.0001,
+   "train_loss": 15.235520818074544,
+   "val_loss": 15.681512832641602,
+   "epoch_seconds": 101.6
+  },
+  {
+   "epoch": 8,
+   "global_step": 6750,
+   "lr": 0.0001,
+   "train_loss": 14.903863218307496,
+   "val_loss": 15.776070594787598,
+   "epoch_seconds": 102.1
+  },
+  {
+   "epoch": 9,
+   "global_step": 7500,
+   "lr": 1e-05,
+   "train_loss": 14.598903705596923,
+   "val_loss": 15.478448867797852,
+   "epoch_seconds": 101.6
+  }
+ ],
+ "train_wall_seconds": 1022.2,
+ "eval_wall_seconds": 6.3,
+ "train_samples_per_second": 469.56,
+ "torch_threads": 1,
+ "host": "ip-172-31-43-205",
+ "nproc": 192,
+ "torch": "2.0.1+cpu",
+ "pytorch_lightning": "2.0.1",
+ "finished_utc": "2026-10-28T16:04:44Z"
+}

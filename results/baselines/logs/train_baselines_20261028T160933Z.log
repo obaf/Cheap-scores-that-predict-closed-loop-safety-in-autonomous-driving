@@ -1,0 +1,42 @@
+16:09:33 train_baselines: SMOKE=0 MODE=parallel NPROC=192 OUT=/data/exp2/baselines
+16:09:33 data: /data/nuplan/dataset/nuplan-v1.1/splits/train_pittsburgh  N_SAMPLES=50000 MIN_GAP_S=2.0 DATA_SEED=0
+16:09:33 training: MODELS='mlp vector raster' SEEDS='0 1 2' EPOCHS=10 BATCH=64 LR=1e-3 (x0.1 at epochs 7,9) EARLY_FRACTION=0.15
+16:09:33 threads (torch+workers): mlp 1+3 vector 2+6 raster 50+2; cache workers 64; pinning 1
+16:09:33 === phase preflight
+16:09:39 === phase preflight done in 6 s
+16:09:39 === phase cache
+16:09:39 cache vector: done before, skipped
+16:09:39 cache mlp: done before, skipped
+16:09:39 cache raster: done before, skipped
+16:09:39 === phase cache done in 0 s
+16:09:39 === phase split
+mlp: 50000 usable samples in /data/exp2/baselines/cache/mlp
+vector: 50000 usable samples in /data/exp2/baselines/cache/vector
+raster: 50000 usable samples in /data/exp2/baselines/cache/raster
+{"caches": {"mlp": 50000, "vector": 50000, "raster": 50000}, "common_samples": 50000, "train_samples": 48020, "val_samples": 1980, "train_logs": 693, "val_logs": 40, "val_fraction_of_logs": 0.05, "salt": "exp2-train-pittsburgh", "checked_against_forbidden_dirs": ["/data/nuplan/dataset/nuplan-v1.1/splits/val", "/data/nuplan/dataset/nuplan-v1.1/splits/test"], "forbidden_logs_found": 0, "allowlist": "/data/exp2/baselines/train_tokens.txt"}
+16:09:41 === phase split done in 2 s
+16:09:41 === phase train
+16:09:41 train raster seed0: start (torch threads 50, loader workers 2, cpus 0-51) -> /data/exp2/baselines/logs/train_raster_seed0.log
+16:09:41 train raster seed1: start (torch threads 50, loader workers 2, cpus 52-103) -> /data/exp2/baselines/logs/train_raster_seed1.log
+16:09:41 train vector seed0: done before, skipped
+16:09:41 train vector seed1: done before, skipped
+16:09:41 train raster seed2: start (torch threads 50, loader workers 2, cpus 104-155) -> /data/exp2/baselines/logs/train_raster_seed2.log
+16:09:41 train mlp seed1: done before, skipped
+16:09:41 train mlp seed2: done before, skipped
+16:09:41 train mlp seed0: done before, skipped
+16:09:41 train vector seed2: done before, skipped
+16:51:33 train raster seed0: ok in 2512 s
+19:43:23 train raster seed2: ok in 12822 s
+20:02:21 train raster seed1: ok in 13960 s
+20:02:21 === phase train done in 13960 s
+   mlp seed0  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 94.9 s, process 103 s  5055.33 samples/s  loss train/val: early 29.647/29.448  final 22.086/21.558
+   mlp seed1  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 94.0 s, process 102 s  5105.89 samples/s  loss train/val: early 29.755/27.343  final 22.042/21.364
+   mlp seed2  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 94.9 s, process 103 s  5060.15 samples/s  loss train/val: early 29.020/27.723  final 22.127/21.359
+raster seed0  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 2499.8 s, process 2512 s  192.01 samples/s  loss train/val: early 22.247/28.159  final 7.098/18.519
+raster seed1  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 13946.1 s, process 13960 s  34.42 samples/s  loss train/val: early 22.892/32.200  final 6.671/18.956
+raster seed2  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 12808.2 s, process 12822 s  37.48 samples/s  loss train/val: early 22.037/23.547  final 6.598/20.401
+vector seed0  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 1022.2 s, process 1036 s  469.56 samples/s  loss train/val: early 23.982/22.697  final 14.599/15.478
+vector seed1  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 1035.7 s, process 1049 s  463.44 samples/s  loss train/val: early 24.316/23.645  final 14.681/15.986
+vector seed2  samples train/val 48020/1980  epochs 10  steps 7500  wall: training loop 1019.0 s, process 1032 s  471.05 samples/s  loss train/val: early 25.471/23.924  final 14.980/15.849
+wrote /data/exp2/baselines/manifest.json (9 runs)
+20:02:21 all runs finished; checkpoints under /data/exp2/baselines/<model>/seed<k>/, manifest /data/exp2/baselines/manifest.json

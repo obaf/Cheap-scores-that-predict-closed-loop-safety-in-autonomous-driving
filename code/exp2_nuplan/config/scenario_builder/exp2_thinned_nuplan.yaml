@@ -1,0 +1,24 @@
+# nuPlan's scenario_builder/nuplan.yaml with one addition: each log's candidate frames are thinned to at most one
+# every `min_gap_s` seconds inside the worker processes (see exp2_nuplan/training/scenario_builder.py). The rest of
+# the scenario_filter (e.g. limit_total_scenarios) then runs as usual in nuPlan.
+_target_: exp2_nuplan.training.scenario_builder.ThinnedNuPlanScenarioBuilder
+_convert_: 'all'
+
+data_root: ${oc.env:NUPLAN_DATA_ROOT}/nuplan-v1.1/trainval
+map_root: ${oc.env:NUPLAN_MAPS_ROOT}
+sensor_root: ${oc.env:NUPLAN_DATA_ROOT}/nuplan-v1.1/sensor_blobs
+
+db_files: null  # always pass scenario_builder.db_files=<train_pittsburgh folder>
+
+map_version: nuplan-maps-v1.0
+
+include_cameras: false
+
+max_workers: null
+verbose: ${verbose}
+
+min_gap_s: 4.0  # [s] minimum time between two kept frames of the same log (any scenario type)
+
+defaults:
+  - vehicle_parameters: nuplan_vehicle_parameters
+  - scenario_mapping: nuplan_scenario_mapping

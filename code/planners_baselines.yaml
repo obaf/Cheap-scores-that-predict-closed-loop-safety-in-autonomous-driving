@@ -1,0 +1,108 @@
+# Experiment-2 planner registry: "small baselines" trained by us on train_pittsburgh (see train_baselines.sh and
+# /data/code/envs/README-training.md). Three nuPlan ML models driven by nuPlan's MLPlanner (planner=ml_planner):
+#   mlp    = ego-status MLP (exp2_nuplan/models/ego_mlp.py, model=ego_mlp_model): ego past poses only, no map/agents
+#   vector = nuPlan simple_vector_model (model=simple_vector_model)
+#   raster = nuPlan raster_model with a timm resnet18 backbone (model=raster_model model.model_name=resnet18)
+# EARLY = checkpoint after 15 % of the optimizer steps, FINAL = end of training (not best-val); seeds 0 (base), 1, 2.
+# model.pretrained=false for raster only skips timm's ImageNet download at model construction: all weights are then
+# loaded from the checkpoint.
+# Format: as planners_core.yaml (family, kind, overrides, optional searchpath/pythonpath, speed; seed variants add
+# seed_of and seed); see build_command() in runner.py (overrides are appended to nuPlan's
+# run_simulation command; searchpath entries are added to nuPlan's; /data/exp2/code is always on PYTHONPATH).
+# speed = relative simulation cost per scenario vs IDM, used by runner.py only for scheduling (smoke run on one
+# closed-loop scenario: sim time IDM 15.7 s, mlp 15.6 s, vector 17.6-18.7 s, raster 19.9-20.2 s).
+planners:
+  mlp_early:
+    family: Baseline
+    kind: ours
+    speed: 1.0
+    searchpath: ["pkg://exp2_nuplan.config"]
+    overrides: ["planner=ml_planner", "model=ego_mlp_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/mlp/seed0/early.ckpt"]
+  mlp_final:
+    family: Baseline
+    kind: ours
+    speed: 1.0
+    searchpath: ["pkg://exp2_nuplan.config"]
+    overrides: ["planner=ml_planner", "model=ego_mlp_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/mlp/seed0/final.ckpt"]
+  vector_early:
+    family: Baseline
+    kind: ours
+    speed: 1.15
+    overrides: ["planner=ml_planner", "model=simple_vector_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/vector/seed0/early.ckpt"]
+  vector_final:
+    family: Baseline
+    kind: ours
+    speed: 1.15
+    overrides: ["planner=ml_planner", "model=simple_vector_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/vector/seed0/final.ckpt"]
+  raster_early:
+    family: Baseline
+    kind: ours
+    speed: 1.3
+    overrides: ["planner=ml_planner", "model=raster_model", "model.model_name=resnet18", "model.pretrained=false",
+                "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/raster/seed0/early.ckpt"]
+  raster_final:
+    family: Baseline
+    kind: ours
+    speed: 1.3
+    overrides: ["planner=ml_planner", "model=raster_model", "model.model_name=resnet18", "model.pretrained=false",
+                "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/raster/seed0/final.ckpt"]
+
+  # ---- seed variants of the FINAL checkpoints (seed-variance analysis on seed140.csv)
+  mlp_final_s1:
+    family: Baseline
+    kind: ours
+    seed_of: mlp_final
+    seed: 1
+    speed: 1.0
+    searchpath: ["pkg://exp2_nuplan.config"]
+    overrides: ["planner=ml_planner", "model=ego_mlp_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/mlp/seed1/final.ckpt"]
+  mlp_final_s2:
+    family: Baseline
+    kind: ours
+    seed_of: mlp_final
+    seed: 2
+    speed: 1.0
+    searchpath: ["pkg://exp2_nuplan.config"]
+    overrides: ["planner=ml_planner", "model=ego_mlp_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/mlp/seed2/final.ckpt"]
+  vector_final_s1:
+    family: Baseline
+    kind: ours
+    seed_of: vector_final
+    seed: 1
+    speed: 1.15
+    overrides: ["planner=ml_planner", "model=simple_vector_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/vector/seed1/final.ckpt"]
+  vector_final_s2:
+    family: Baseline
+    kind: ours
+    seed_of: vector_final
+    seed: 2
+    speed: 1.15
+    overrides: ["planner=ml_planner", "model=simple_vector_model", "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/vector/seed2/final.ckpt"]
+  raster_final_s1:
+    family: Baseline
+    kind: ours
+    seed_of: raster_final
+    seed: 1
+    speed: 1.3
+    overrides: ["planner=ml_planner", "model=raster_model", "model.model_name=resnet18", "model.pretrained=false",
+                "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/raster/seed1/final.ckpt"]
+  raster_final_s2:
+    family: Baseline
+    kind: ours
+    seed_of: raster_final
+    seed: 2
+    speed: 1.3
+    overrides: ["planner=ml_planner", "model=raster_model", "model.model_name=resnet18", "model.pretrained=false",
+                "planner.ml_planner.model_config=${model}",
+                "planner.ml_planner.checkpoint_path=/data/exp2/baselines/raster/seed2/final.ckpt"]

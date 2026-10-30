@@ -1,0 +1,122 @@
+# Experiment 2 planner registry, part 2: released learned planners (checkpoints in /data/checkpoints, loaded only on the
+# EC2 host). Overrides verified on the host (experiment2/env/README.md section 6). speed = relative cost per scenario
+# from the measured per-step times (scheduling only).
+planners:
+  pdm_open:
+    family: PDM
+    kind: released
+    speed: 1.0
+    overrides: [planner=pdm_open_planner, planner.pdm_open_planner.checkpoint_path=/data/checkpoints/tuplan_garage/pdm_open_checkpoint.ckpt]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  pdm_hybrid:
+    family: PDM
+    kind: released
+    speed: 2.2
+    overrides: [planner=pdm_hybrid_planner, planner.pdm_hybrid_planner.checkpoint_path=/data/checkpoints/tuplan_garage/pdm_offset_checkpoint.ckpt]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  gc_pgp:
+    family: Released imitation
+    kind: released
+    speed: 2.3
+    overrides: [planner=ml_planner, "planner.ml_planner.model_config=${model}",
+                planner.ml_planner.checkpoint_path=/data/checkpoints/tuplan_garage/gc_pgp_checkpoint.ckpt,
+                model=gc_pgp_model, model.aggregator.pre_train=false]
+    # interPlan ships its own model/gc_pgp_model.yaml, found first on its search path, whose interpolations expect the key
+    # gc_pgp_model and which sets use_raster_feature_builder false; alias the key and keep tuplan_garage's value (A26)
+    interplan_overrides: ["+gc_pgp_model=${model}", model.use_raster_feature_builder=true]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  plancnn:
+    family: Released imitation
+    kind: released
+    speed: 2.3
+    overrides: [planner=ml_planner, "planner.ml_planner.model_config=${model}",
+                planner.ml_planner.checkpoint_path=/data/checkpoints/tuplan_garage/plancnn_checkpoint.ckpt,
+                model=raster_model, model.pretrained=false]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  urban_driver:
+    family: Released imitation
+    kind: released
+    speed: 2.0
+    overrides: [planner=ml_planner, "planner.ml_planner.model_config=${model}",
+                planner.ml_planner.checkpoint_path=/data/checkpoints/tuplan_garage/urbandriver_checkpoint.ckpt,
+                model=urban_driver_open_loop_model]
+    searchpath: [pkg://tuplan_garage.planning.script.config.common, pkg://tuplan_garage.planning.script.config.simulation]
+  plantf:
+    family: Released imitation
+    kind: released
+    speed: 2.3
+    script: /data/code/planTF/run_simulation.py
+    cwd: /data/code/planTF
+    pythonpath: [/data/code/planTF]
+    keep_searchpath: true
+    config_dirs: [file:///data/code/planTF/config]
+    overrides: [planner=planTF, planner.imitation_planner.planner_ckpt=/data/checkpoints/plantf/planTF.ckpt,
+                number_of_gpus_allocated_per_simulation=0]
+  pluto:
+    family: PLUTO
+    kind: released
+    speed: 4.6
+    script: /data/code/pluto/run_simulation.py
+    cwd: /data/code/pluto
+    pythonpath: [/data/code/pluto]
+    keep_searchpath: true
+    config_dirs: [file:///data/code/pluto/config]
+    overrides: [planner=pluto_planner, planner.pluto_planner.planner_ckpt=/data/checkpoints/pluto/pluto_1M_aux_cil.ckpt,
+                number_of_gpus_allocated_per_simulation=0]
+  pluto_nopost:
+    family: PLUTO
+    kind: released
+    speed: 3.1
+    script: /data/code/pluto/run_simulation.py
+    cwd: /data/code/pluto
+    pythonpath: [/data/code/pluto]
+    keep_searchpath: true
+    config_dirs: [file:///data/code/pluto/config]
+    overrides: [planner=pluto_planner, planner.pluto_planner.planner_ckpt=/data/checkpoints/pluto/pluto_1M_aux_cil.ckpt,
+                planner.pluto_planner._target_=exp2_nuplan.pluto_no_post.PlutoPlannerNoPost,
+                number_of_gpus_allocated_per_simulation=0]
+  dp_default:
+    family: Diffusion Planner
+    kind: released
+    speed: 4.6
+    overrides: [planner=diffusion_planner, planner.diffusion_planner.config.args_file=/data/checkpoints/diffusion_planner/args.json,
+                planner.diffusion_planner.ckpt_path=/data/checkpoints/diffusion_planner/model.pth, planner.diffusion_planner.device=cpu,
+                planner.diffusion_planner._target_=exp2_nuplan.planners.SeededDiffusionPlanner, +planner.diffusion_planner.seed_base=0]
+    searchpath: [pkg://diffusion_planner.config.scenario_filter, pkg://diffusion_planner.config]
+  dp_guidance:
+    family: Diffusion Planner
+    kind: released
+    speed: 6.0
+    overrides: [planner=diffusion_planner_guidance, planner.diffusion_planner.config.args_file=/data/checkpoints/diffusion_planner/args.json,
+                planner.diffusion_planner.ckpt_path=/data/checkpoints/diffusion_planner/model.pth, planner.diffusion_planner.device=cpu,
+                planner.diffusion_planner._target_=exp2_nuplan.planners.SeededDiffusionPlanner, +planner.diffusion_planner.seed_base=0]
+    searchpath: [pkg://diffusion_planner.config.scenario_filter, pkg://diffusion_planner.config]
+  dp_raw:
+    family: Diffusion Planner
+    kind: released
+    speed: 4.7
+    overrides: [planner=diffusion_planner, planner.diffusion_planner.config.args_file=/data/checkpoints/diffusion_planner/args.json,
+                planner.diffusion_planner.ckpt_path=/data/checkpoints/diffusion_planner/model.pth, planner.diffusion_planner.device=cpu,
+                +planner.diffusion_planner.enable_ema=false,
+                planner.diffusion_planner._target_=exp2_nuplan.planners.SeededDiffusionPlanner, +planner.diffusion_planner.seed_base=0]
+    searchpath: [pkg://diffusion_planner.config.scenario_filter, pkg://diffusion_planner.config]
+  dp_default_s1:
+    family: Diffusion Planner
+    kind: released
+    speed: 4.6
+    seed_of: dp_default
+    seed: 1
+    overrides: [planner=diffusion_planner, planner.diffusion_planner.config.args_file=/data/checkpoints/diffusion_planner/args.json,
+                planner.diffusion_planner.ckpt_path=/data/checkpoints/diffusion_planner/model.pth, planner.diffusion_planner.device=cpu,
+                planner.diffusion_planner._target_=exp2_nuplan.planners.SeededDiffusionPlanner, +planner.diffusion_planner.seed_base=1]
+    searchpath: [pkg://diffusion_planner.config.scenario_filter, pkg://diffusion_planner.config]
+  dp_default_s2:
+    family: Diffusion Planner
+    kind: released
+    speed: 4.6
+    seed_of: dp_default
+    seed: 2
+    overrides: [planner=diffusion_planner, planner.diffusion_planner.config.args_file=/data/checkpoints/diffusion_planner/args.json,
+                planner.diffusion_planner.ckpt_path=/data/checkpoints/diffusion_planner/model.pth, planner.diffusion_planner.device=cpu,
+                planner.diffusion_planner._target_=exp2_nuplan.planners.SeededDiffusionPlanner, +planner.diffusion_planner.seed_base=2]
+    searchpath: [pkg://diffusion_planner.config.scenario_filter, pkg://diffusion_planner.config]
